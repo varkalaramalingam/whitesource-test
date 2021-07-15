@@ -18,7 +18,7 @@ steps:
     repo: 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache
     registry: 932729296665.dkr.ecr.ap-south-1.amazonaws.com
 - name: Scan the latest build image using whitesource
-  image: 932729296665.dkr.ecr.ap-south-1.amazonaws.com/whitesource-agent:latest
+  image: ramalingam81/whitesource-agent:latest
   environment:
     access_key:
       from_secret: aws_access_key_id
