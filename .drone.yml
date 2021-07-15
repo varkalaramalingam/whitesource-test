@@ -1,12 +1,17 @@
 kind: pipeline
-type: docker
 name: default
 
 steps:
-- name: testing
-  image: docker
-  privileged: true
-  commands:
-  - docker ps
-  volumes:
-  - /var/run/docker.sock:/var/run/docker.sock
+    - name: build
+      image: docker
+      volumes:
+        - name: docker_socket
+          path: /var/run/docker.sock
+      commands:
+        - docker build -t my/tag .
+
+
+volumes:
+    - name: docker_socket
+      host:
+        path: /var/run/docker.sock
