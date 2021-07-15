@@ -8,10 +8,3 @@ steps:
   commands:
     - docker pull nginx
     - docker save -o nginx.tar nginx
-  volumes:
-  - name: docker
-    path: /var/lib/
-volumes:
-- name: docker
-  host:
-    path: /var/lib/docker
