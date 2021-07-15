@@ -18,7 +18,7 @@ steps:
     repo: 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache
     registry: 932729296665.dkr.ecr.ap-south-1.amazonaws.com
 ##########
-- name:  push cms-ui image to ecr
+- name: pull
   image: plugins/ecr
   settings:
     access_key:
@@ -27,7 +27,7 @@ steps:
       from_secret: aws_secret_access_key
     region:
       from_secret: aws_default_region
-  commands:
+  script:
     - docker pull 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache:build-v${DRONE_BUILD_NUMBER}
     - docker save -o apache-build-v${DRONE_BUILD_NUMBER}.tar 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache:build-v${DRONE_BUILD_NUMBER}
 ###########
