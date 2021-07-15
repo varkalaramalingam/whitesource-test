@@ -1,0 +1,38 @@
+kind: pipeline
+type: docker
+name: default
+steps:
+##########
+- name: pull
+  image: plugins/ecr
+  settings:
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    region:
+      from_secret: aws_default_region
+  commands:
+    - docker pull nginx
+    - docker save -o nginx.tar nginx
+  volumes:
+  - name: docker
+    path: /var/lib/
+volumes:
+- name: docker
+  host:
+    path: /var/lib/docker
+###########
+- name: Scan the latest build image using whitesource
+  image: ramalingam81/whitesource-agent:latest
+  environment:
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    region:
+      from_secret: aws_default_region
+    API_KEY:
+      from_secret: api_key
+  commands:
+    - java -jar ./wss-unified-agent.jar -apiKey $API_KEY 
