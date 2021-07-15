@@ -1,0 +1,22 @@
+kind: pipeline
+type: docker
+name: default
+steps:
+###########
+- name: Scan the latest build image using whitesource
+  image: ramalingam81/whitesource-agent:latest
+  environment:
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    region:
+      from_secret: aws_default_region
+    API_KEY:
+      from_secret: api_key
+  commands:
+    - java -jar ./wss-unified-agent.jar -apiKey $API_KEY 
+- name: test
+  image: docker:19.03.8-dind
+  commands:
+    - docker ps
