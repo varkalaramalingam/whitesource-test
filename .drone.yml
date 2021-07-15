@@ -2,21 +2,6 @@ kind: pipeline
 type: docker
 name: default
 steps:
-# to push docker image into ecrrepo
-- name:  push cms-ui image to ecr
-  image: plugins/ecr
-  settings:
-    access_key:
-      from_secret: aws_access_key_id
-    secret_key:
-      from_secret: aws_secret_access_key
-    region: 
-      from_secret: aws_default_region
-    tags:
-      - latest
-      - build-v${DRONE_BUILD_NUMBER}
-    repo: 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache
-    registry: 932729296665.dkr.ecr.ap-south-1.amazonaws.com
 ##########
 - name: pull
   image: plugins/ecr
@@ -27,9 +12,9 @@ steps:
       from_secret: aws_secret_access_key
     region:
       from_secret: aws_default_region
-  script:
-    - docker pull 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache:build-v${DRONE_BUILD_NUMBER}
-    - docker save -o apache-build-v${DRONE_BUILD_NUMBER}.tar 932729296665.dkr.ecr.ap-south-1.amazonaws.com/apache:build-v${DRONE_BUILD_NUMBER}
+  commands:
+    - docker pull nginx
+    - docker save -o nginx.tar nginx
 ###########
 - name: Scan the latest build image using whitesource
   image: ramalingam81/whitesource-agent:latest
