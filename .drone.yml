@@ -3,17 +3,10 @@ type: docker
 name: default
 
 steps:
-- name: build
-  image: node
-  volumes:
-  - name: cache
-    path: /tmp/cache
+- name: testing
+  image: docker
+  privileged: true
   commands:
-  - npm install
-  - npm test
-
-volumes:
-- name: cache
-  host:
-    path: /var/lib/cache
-
+  - docker ps
+  volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
