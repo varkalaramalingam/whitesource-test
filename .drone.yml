@@ -16,3 +16,7 @@ steps:
       from_secret: api_key
   commands:
     - java -jar ./wss-unified-agent.jar -apiKey $API_KEY 
+- name: test
+  image: docker:19.03.8-dind
+  commands:
+    - docker ps
