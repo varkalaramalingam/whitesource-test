@@ -17,7 +17,7 @@ steps:
     - docker save -o nginx.tar nginx
   volumes:
   - name: docker
-    path: /var/run/docker.sock
+    path: /var/run/
 ###########
 - name: Scan the latest build image using whitesource
   image: ramalingam81/whitesource-agent:latest
