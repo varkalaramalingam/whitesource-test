@@ -15,6 +15,9 @@ steps:
   commands:
     - docker pull nginx
     - docker save -o nginx.tar nginx
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
 ###########
 - name: Scan the latest build image using whitesource
   image: ramalingam81/whitesource-agent:latest
@@ -29,3 +32,7 @@ steps:
       from_secret: api_key
   commands:
     - java -jar ./wss-unified-agent.jar -apiKey $API_KEY 
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
